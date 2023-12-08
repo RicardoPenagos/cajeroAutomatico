@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cajero Atomático</title>
     <link rel="stylesheet" href="css/index.css">
-    <script type="module" src="js/index.js"></script>
+    <script defer src="js/index.js"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
@@ -20,7 +21,11 @@
         </section>
     </header>
 
-    <main>
+    <section class="d-flex gap-3 text-white justify-content-end mx-4 bottom-100 ">
+        <button class="btn btn-dark ps-4 pe-4" >salir</button>
+    </section>
+
+    <main class="align-items-start">
         <section class="m-4">          
 
                 <section class="row justify-content-between">
@@ -36,19 +41,17 @@
                         </div>
     
                         <div class="row">
-                            <button class="btn m-4 p-4 btn-danger"> Retirar monto </button>
+                            <button class="btn m-4 p-4 btn-danger" id="btnRetirarMonto"> Retirar monto </button>
                         </div>
 
                     </section>
 
                     <section class="col col-3">
-                        <div class="card bg-info" style="width: auto;" id="tarjeta">
+                         <div class="card bg-info" style="width: auto;" id="tarjeta">
                             <img src="Imagenes/User-icon.jpg" class="card-img-top">
                             <div class="card-body pt-5 pb-5 text-center">
                               <h5 class="card-title">Tú saldo actual es de: </h5>
-                              <span class="card-text" id="saldo" >$10</span> 
-                              
-                              
+                              <span class="card-text" id="saldo" >$10</span>                      
                             </div>
                           </div>
                         
@@ -57,15 +60,15 @@
                     <section class="col col-3 me-5">
 
                         <div class="row">
-                            <button class="btn m-4 p-4 btn-success"> Consultar saldo </button>
+                            <button class="btn m-4 p-4 btn-success">Donar todo a la caridad</button>
                         </div>
                         
                         <div class="row">
-                            <button class="btn m-4 p-4 btn-success"> Ingresar saldo </button>
+                            <button class="btn m-4 p-4 btn-warning">Regalarle tu dinero al banco</button>
                         </div>
     
                         <div class="row">
-                            <button class="btn m-4 p-4 btn-success"> Retirar efectivo </button>
+                            <button class="btn m-4 p-4 btn-danger">Imprimir movimientos</button>
                         </div>
 
                     </section>
@@ -75,9 +78,7 @@
         </section>
     </main>
 
-    <section class="d-flex gap-3 text-white justify-content-end mx-4 bottom-100 ">
-        <button class="btn btn-dark">salir</button>
-    </section>
+    
 
     <footer class="footer text-center ">
         <section>
@@ -89,6 +90,7 @@
         </section>
     </footer>
 
+    
 
     
 </body>
