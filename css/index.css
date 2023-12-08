@@ -1,0 +1,28 @@
+/*==================== Imports ==================*/
+
+*{
+    margin: 0px;
+    border: 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+body{
+    background-color: rgb(49, 49, 216);
+    color: white;
+    
+    
+}
+
+
+
+.footer{
+    background-color: rgb(62, 64, 65);
+    width: 100%;
+    padding: 3rem;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    bottom:0%;
+   
+}
