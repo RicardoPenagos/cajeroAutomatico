@@ -1,6 +1,7 @@
 
 //========================= Corroborar inicio de sesión ===========================
 const usuario = JSON.parse(localStorage.getItem('usuario'));
+
 if (usuario === null){
   window.location.assign("login.html");
 }
@@ -27,8 +28,6 @@ function cerrarSesion(){
 //======================== Consultar saldo ====================
 
 const $btnConsultarSaldo = document.querySelector('#btnConsultarSaldo');
-console.log($btnConsultarSaldo);
-
 
 function consultarSaldo() {
   const regex = /(\d+)/g;
@@ -40,7 +39,7 @@ function consultarSaldo() {
 function actualizarSaldo(valor = 0) {
   const $tarjeta = document.querySelector('#tarjeta');
     $tarjeta.innerHTML = 
-  ` <img src="Imagenes/User-icon.jpg" class="card-img-top">
+  ` <img src="Imagenes/${usuario.nombre}.jpg" class="card-img-top">
     <div class="card-body pt-5 pb-5 text-center">
       <h5 class="card-title">Tú saldo actual es de: </h5>
       <span class="card-text" id="saldo" >$${consultarSaldo() + valor}</span>                      
@@ -52,7 +51,7 @@ function actualizarSaldo(valor = 0) {
 function actualizarSaldoBtn() {
   const $tarjeta = document.querySelector('#tarjeta');
     $tarjeta.innerHTML = 
-  ` <img src="Imagenes/User-icon.jpg" class="card-img-top">
+  ` <img src="Imagenes/${usuario.nombre}.jpg" class="card-img-top">
     <div class="card-body pt-5 pb-5 text-center">
       <h5 class="card-title">Tú saldo actual es de: </h5>
       <span class="card-text" id="saldo" >$${consultarSaldo()}</span>                      
@@ -68,7 +67,7 @@ const $btnIngresarMonto = document.querySelector('#btnIngresarMonto');
 function btnIngresarMonto() {
   const $tarjeta = document.querySelector('#tarjeta');
   $tarjeta.innerHTML =
-    `<img src="Imagenes/User-icon.jpg" class="card-img-top">
+    `<img src="Imagenes/${usuario.nombre}.jpg" class="card-img-top">
     <div class="card-body pt-5 pb-5 text-center">
       <h5 class="card-title mb-4">Ingresa el monto que quieras agregar</h5>
       <span class="card-text" id="saldo" style="display:none">$${consultarSaldo()}</span>
@@ -107,7 +106,7 @@ const $btnRetirarMonto = document.querySelector('#btnRetirarMonto');
 function btnRetirarMonto() {
   const $tarjeta = document.querySelector('#tarjeta');
   $tarjeta.innerHTML =
-    `<img src="Imagenes/User-icon.jpg" class="card-img-top">
+    `<img src="Imagenes/${usuario.nombre}.jpg" class="card-img-top">
     <div class="card-body pt-5 pb-5 text-center">
       <h5 class="card-title mb-4">Ingresa el monto que requieras retirar</h5>
       <span class="card-text" id="saldo" style="display:none">$${consultarSaldo()}</span>
@@ -137,8 +136,25 @@ function retirarSaldo() {
   }
 }
 
+//============================ Botón donar todo ======================
 
+const $btnDonar = document.querySelector('#btnDonar');
 
+function donar(){
+  localStorage.setItem('usuario', JSON.stringify({nombre: usuario.nombre, password: usuario.password, saldo: 10}));
+  window.location.assign('donacion.html');
+  
+}
+
+//============================ Botón donar todo al Banco ======================
+
+const $btnDonarBanco = document.querySelector('#btnDonarBanco');
+
+function donarBanco(){
+  localStorage.setItem('usuario', JSON.stringify({nombre: usuario.nombre, password: usuario.password, saldo: 10}));
+  window.location.assign('donacionBanco.html');
+  
+}
 
 
 
@@ -148,6 +164,8 @@ $btnConsultarSaldo.addEventListener('click', actualizarSaldoBtn);
 $btnIngresarMonto.addEventListener('click', btnIngresarMonto);
 $btnRetirarMonto.addEventListener('click', btnRetirarMonto);
 $btnCerrarSesion.addEventListener('click', cerrarSesion);
+$btnDonar.addEventListener('click', donar);
+$btnDonarBanco.addEventListener('click', donarBanco);
 
 
 

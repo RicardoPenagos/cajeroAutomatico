@@ -1,0 +1,45 @@
+/*==================== Imports ==================*/
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+
+/*==================== General ==================*/
+*{
+    margin: 0px;
+    border: 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+h1{
+    font-family: 'Fredoka One', cursive;
+    
+}
+
+.agradecimiento{
+    font-size: 150px;
+    margin-bottom: 0px;
+}
+
+
+body{
+    background-color: rgb(49, 49, 216);
+    color: white;
+    
+    
+}
+
+.imagen-donacion{
+    margin-left: 30%;
+    margin-top: 3%
+    
+}
+
+.footer{
+    background-color: rgb(62, 64, 65);
+    width: 100%;
+    padding: 2.5rem;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    bottom:0%;
+   
+}

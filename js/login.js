@@ -1,7 +1,7 @@
 //======================= Cuentas ==========================
 const cuentas = [
     { nombre: "Ricardo", password: 1234, saldo: 200 },
-    { nombre: "Pepito", password: "user", saldo: 290 },
+    { nombre: "Paola", password: "user", saldo: 290 },
     { nombre: "Sensei", password: "admin", saldo: 990 }
 ];
 
