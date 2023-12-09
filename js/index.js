@@ -1,8 +1,33 @@
 
+//========================= Corroborar inicio de sesión ===========================
+const usuario = JSON.parse(localStorage.getItem('usuario'));
+if (usuario === null){
+  window.location.assign("login.html");
+}
+else{
+  const $nombreUsuario = document.querySelector('#nombreUsuario');
+  $nombreUsuario.innerHTML= `Sesión: <span class="text-pattern">${usuario.nombre}</span>`;
+  actualizarSaldo(usuario.saldo - 10);
+
+}
+
+
+//========================== Cerra sesión =====================================
+
+const $btnCerrarSesion = document.querySelector('#btnCerrarSesion');
+
+function cerrarSesion(){
+  localStorage.clear();
+  swal(`Cerrando Sesión`, "Se le redirigirá al login", "info").then((value) => {
+      window.location.assign("login.html");
+  });
+  
+}
 
 //======================== Consultar saldo ====================
 
 const $btnConsultarSaldo = document.querySelector('#btnConsultarSaldo');
+console.log($btnConsultarSaldo);
 
 
 function consultarSaldo() {
@@ -10,20 +35,30 @@ function consultarSaldo() {
   const $saldo = document.querySelector('#saldo');
   const valor = $saldo.textContent.match(regex);
   return parseInt(valor);
-  //return parseInt(document.querySelector('#saldo').textContent.match(/(\d+)/g));
 }
 
 function actualizarSaldo(valor = 0) {
   const $tarjeta = document.querySelector('#tarjeta');
-  $tarjeta.innerHTML = ` <img src="Imagenes/User-icon.jpg" class="card-img-top">
+    $tarjeta.innerHTML = 
+  ` <img src="Imagenes/User-icon.jpg" class="card-img-top">
     <div class="card-body pt-5 pb-5 text-center">
       <h5 class="card-title">Tú saldo actual es de: </h5>
       <span class="card-text" id="saldo" >$${consultarSaldo() + valor}</span>                      
-    </div>`
+    </div>`;
+  
 }
 
-
-
+// Preguntar al profe como solucionar esto sin tener que repetir tanto código
+function actualizarSaldoBtn() {
+  const $tarjeta = document.querySelector('#tarjeta');
+    $tarjeta.innerHTML = 
+  ` <img src="Imagenes/User-icon.jpg" class="card-img-top">
+    <div class="card-body pt-5 pb-5 text-center">
+      <h5 class="card-title">Tú saldo actual es de: </h5>
+      <span class="card-text" id="saldo" >$${consultarSaldo()}</span>                      
+    </div>`;
+  
+}
 
 
 //======================== Ingresar monto ====================
@@ -109,13 +144,14 @@ function retirarSaldo() {
 
 
 //======================== Eventos ====================
-$btnConsultarSaldo.addEventListener('click', actualizarSaldo(0));
+$btnConsultarSaldo.addEventListener('click', actualizarSaldoBtn);
 $btnIngresarMonto.addEventListener('click', btnIngresarMonto);
 $btnRetirarMonto.addEventListener('click', btnRetirarMonto);
+$btnCerrarSesion.addEventListener('click', cerrarSesion);
 
 
 
 
 
-actualizarSaldo(0);
+
 

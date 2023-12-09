@@ -1,5 +1,7 @@
 /*==================== Imports ==================*/
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
 
+/*==================== General ==================*/
 *{
     margin: 0px;
     border: 0px;
@@ -7,14 +9,41 @@
     overflow: hidden;
 }
 
+h2 span{
+    font-family: 'Fredoka One', cursive;
+}
+
+
+
+    
+.text-container .text-pattern {  
+    color: transparent;
+    background-color: #e0840b;
+    background-image: repeating-linear-gradient(45deg,    transparent, transparent 25px,       rgba(255,255,255,.5) 25px, rgba(255,255,255,.5) 50px);
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: color 3s linear infinite; 
+    background-size: 200%;  
+ 
+  }
+  
+  @keyframes color {
+    from { 
+      background-position: 0% 50%;
+    }
+    to { 
+      background-position: 100% 50%; 
+    }
+  }
+
+
+
 body{
     background-color: rgb(49, 49, 216);
     color: white;
     
     
 }
-
-
 
 .footer{
     background-color: rgb(62, 64, 65);
