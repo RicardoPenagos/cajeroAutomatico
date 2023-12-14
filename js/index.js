@@ -29,7 +29,10 @@ function cerrarSesion(){
 
 const $btnConsultarSaldo = document.querySelector('#btnConsultarSaldo');
 
-let movimientos = [];
+if(!JSON.parse(localStorage.getItem('movimientos'))){
+  localStorage.setItem('movimientos', JSON.stringify([]));
+}
+
 
 function consultarSaldo() {
   // const regex = /(\d+)/g;
@@ -96,6 +99,7 @@ function btnIngresarMonto() {
 function ingresarSaldo() {
   const inputSaldo = Number(document.querySelector('#input-saldo').value);
   const saldoFinal = consultarSaldo() + inputSaldo;
+  const movimientos = JSON.parse(localStorage.getItem('movimientos'));
 
   if(inputSaldo < 0){
     swal(`Operación incorrecta`, `No puedes ingresar números negativos`, "error");
@@ -107,6 +111,8 @@ function ingresarSaldo() {
     
     swal(`Monto ingresado = ${inputSaldo}`, `Nuevo saldo en cuenta = ${saldoFinal}`, "success");
     movimientos.push(`Ingresaste: ${inputSaldo}`); 
+    localStorage.setItem('movimientos', JSON.stringify(movimientos));
+
     actualizarSaldo(inputSaldo);
   }
   else {
@@ -145,6 +151,7 @@ function btnRetirarMonto() {
 function retirarSaldo() {
   const inputSaldo = Number(document.querySelector('#input-saldo').value);
   const saldoFinal = consultarSaldo() - inputSaldo;
+  const movimientos = JSON.parse(localStorage.getItem('movimientos'));
 
   if(inputSaldo < 0){
     swal(`Operación incorrecta`, `No puedes ingresar números negativos`, "error");
@@ -152,9 +159,9 @@ function retirarSaldo() {
   }
 
   if (consultarSaldo()-inputSaldo >= 10) {
-    Math.abs(inputSaldo);
     swal(`Monto ingresado = ${inputSaldo}`, `Nuevo saldo en cuenta = ${saldoFinal}`, "success");
-    movimientos.push(`Retiraste: ${inputSaldo}`); 
+    movimientos.push(`Ingresaste: ${inputSaldo}`); 
+    localStorage.setItem('movimientos', JSON.stringify(movimientos));
     actualizarSaldo(-inputSaldo);
 
   }
@@ -188,6 +195,7 @@ function donarBanco(){
 
 const $btnImprimirMovimientos = document.querySelector('#btnImprimirMovimientos');
 
+
 function mostrarMovimientos(){
   const $tarjeta = document.querySelector('#tarjeta');
     $tarjeta.innerHTML = 
@@ -201,6 +209,7 @@ function mostrarMovimientos(){
 }
 
 function cicloMovimientos(){
+  const movimientos = JSON.parse(localStorage.getItem('movimientos'));
   let impresion = "";
 
   if(movimientos.length > 0){
