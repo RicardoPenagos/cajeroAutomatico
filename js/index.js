@@ -8,6 +8,9 @@ if (usuario === null){
 }else{
   const $nombreUsuario = document.querySelector('#nombreUsuario');
   $nombreUsuario.innerHTML= `Sesión: <span class="text-pattern">${usuario.nombre}</span>`;
+  if(!JSON.parse(localStorage.getItem('movimientos'))){
+    localStorage.setItem('movimientos', JSON.stringify([]));
+  }
   actualizarSaldo();
 
 }
@@ -29,15 +32,10 @@ function cerrarSesion(){
 
 const $btnConsultarSaldo = document.querySelector('#btnConsultarSaldo');
 
-if(!JSON.parse(localStorage.getItem('movimientos'))){
-  localStorage.setItem('movimientos', JSON.stringify([]));
-}
+
 
 
 function consultarSaldo() {
-  // const regex = /(\d+)/g;
-  // const $saldo = document.querySelector('#saldo');
-  // const valor = $saldo.textContent.match(regex);
 
   const usuarioActualizado = JSON.parse(localStorage.getItem('usuario'));
   
@@ -160,7 +158,7 @@ function retirarSaldo() {
 
   if (consultarSaldo()-inputSaldo >= 10) {
     swal(`Monto ingresado = ${inputSaldo}`, `Nuevo saldo en cuenta = ${saldoFinal}`, "success");
-    movimientos.push(`Ingresaste: ${inputSaldo}`); 
+    movimientos.push(`Retiraste: ${inputSaldo}`); 
     localStorage.setItem('movimientos', JSON.stringify(movimientos));
     actualizarSaldo(-inputSaldo);
 
@@ -175,6 +173,12 @@ function retirarSaldo() {
 const $btnDonar = document.querySelector('#btnDonar');
 
 function donar(){
+
+  const movimientos = JSON.parse(localStorage.getItem('movimientos'));
+  movimientos.push(`Donaste todo a la caridad: ${consultarSaldo() - 10}`); 
+  localStorage.setItem('movimientos', JSON.stringify(movimientos));
+
+
   localStorage.setItem('usuario', JSON.stringify({nombre: usuario.nombre, password: usuario.password, saldo: 10}));
   window.location.assign('donacion.html');
   
@@ -185,6 +189,12 @@ function donar(){
 const $btnDonarBanco = document.querySelector('#btnDonarBanco');
 
 function donarBanco(){
+
+  const movimientos = JSON.parse(localStorage.getItem('movimientos'));
+  movimientos.push(`Regalaste todo al banco: ${consultarSaldo() - 10}`); 
+  localStorage.setItem('movimientos', JSON.stringify(movimientos));
+
+
   localStorage.setItem('usuario', JSON.stringify({nombre: usuario.nombre, password: usuario.password, saldo: 10}));
   window.location.assign('donacionBanco.html');
   
