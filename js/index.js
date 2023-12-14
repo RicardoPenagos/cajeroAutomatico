@@ -4,11 +4,11 @@ const usuario = JSON.parse(localStorage.getItem('usuario'));
 
 if (usuario === null){
   window.location.assign("login.html");
-}
-else{
+
+}else{
   const $nombreUsuario = document.querySelector('#nombreUsuario');
   $nombreUsuario.innerHTML= `Sesión: <span class="text-pattern">${usuario.nombre}</span>`;
-  actualizarSaldo(usuario.saldo - 10);
+  actualizarSaldo();
 
 }
 
@@ -29,11 +29,16 @@ function cerrarSesion(){
 
 const $btnConsultarSaldo = document.querySelector('#btnConsultarSaldo');
 
+let movimientos = [];
+
 function consultarSaldo() {
-  const regex = /(\d+)/g;
-  const $saldo = document.querySelector('#saldo');
-  const valor = $saldo.textContent.match(regex);
-  return parseInt(valor);
+  // const regex = /(\d+)/g;
+  // const $saldo = document.querySelector('#saldo');
+  // const valor = $saldo.textContent.match(regex);
+
+  const usuarioActualizado = JSON.parse(localStorage.getItem('usuario'));
+  
+  return usuarioActualizado.saldo;
 }
 
 function actualizarSaldo(valor = 0) {
@@ -44,7 +49,9 @@ function actualizarSaldo(valor = 0) {
       <h5 class="card-title">Tú saldo actual es de: </h5>
       <span class="card-text" id="saldo" >$${consultarSaldo() + valor}</span>                      
     </div>`;
-  
+
+    localStorage.setItem('usuario', JSON.stringify({nombre: usuario.nombre, password: usuario.password, saldo: (consultarSaldo() + valor)}));
+
 }
 
 // Preguntar al profe como solucionar esto sin tener que repetir tanto código
@@ -56,6 +63,8 @@ function actualizarSaldoBtn() {
       <h5 class="card-title">Tú saldo actual es de: </h5>
       <span class="card-text" id="saldo" >$${consultarSaldo()}</span>                      
     </div>`;
+
+    localStorage.setItem('usuario', JSON.stringify({nombre: usuario.nombre, password: usuario.password, saldo: consultarSaldo()}));
   
 }
 
@@ -88,13 +97,23 @@ function ingresarSaldo() {
   const inputSaldo = Number(document.querySelector('#input-saldo').value);
   const saldoFinal = consultarSaldo() + inputSaldo;
 
+  if(inputSaldo < 0){
+    swal(`Operación incorrecta`, `No puedes ingresar números negativos`, "error");
+    return;
+  }
+
+
   if (inputSaldo <= 990 && consultarSaldo()+inputSaldo <= 990) {
+    
     swal(`Monto ingresado = ${inputSaldo}`, `Nuevo saldo en cuenta = ${saldoFinal}`, "success");
+    movimientos.push(`Ingresaste: ${inputSaldo}`); 
     actualizarSaldo(inputSaldo);
   }
   else {
     swal(`Operación incorrecta`, `Tu saldo actual excedería el límite de 990 pesos por $${saldoFinal - 990}`, "error");
   }
+
+
 }
 
 
@@ -127,9 +146,17 @@ function retirarSaldo() {
   const inputSaldo = Number(document.querySelector('#input-saldo').value);
   const saldoFinal = consultarSaldo() - inputSaldo;
 
+  if(inputSaldo < 0){
+    swal(`Operación incorrecta`, `No puedes ingresar números negativos`, "error");
+    return;
+  }
+
   if (consultarSaldo()-inputSaldo >= 10) {
+    Math.abs(inputSaldo);
     swal(`Monto ingresado = ${inputSaldo}`, `Nuevo saldo en cuenta = ${saldoFinal}`, "success");
+    movimientos.push(`Retiraste: ${inputSaldo}`); 
     actualizarSaldo(-inputSaldo);
+
   }
   else {
     swal(`Operación incorrecta`, `Tu saldo actual excedería el límite de 10 pesos por $${10 - saldoFinal}`, "error");
@@ -157,6 +184,38 @@ function donarBanco(){
 }
 
 
+//============================ Botón Imprimir movimientos ======================
+
+const $btnImprimirMovimientos = document.querySelector('#btnImprimirMovimientos');
+
+function mostrarMovimientos(){
+  const $tarjeta = document.querySelector('#tarjeta');
+    $tarjeta.innerHTML = 
+  ` 
+    <div class="card-body pt-5 pb-5 text-center">
+      <h5 class="card-title">Movimientos: </h5>
+      <span class="card-text" id="saldo" style="display:none"></span> 
+      ${cicloMovimientos()}        
+
+    </div>`;
+}
+
+function cicloMovimientos(){
+  let impresion = "";
+
+  if(movimientos.length > 0){
+    for(let i = 0; i < movimientos.length; i++){
+      impresion += `<span class="card-text" id="movimientos">${movimientos[i]}</span> <br>`
+    }
+    
+  }else{
+    impresion = `Aún no se han registrado movimientos`
+  }
+
+  return impresion;
+}
+
+
 
 
 //======================== Eventos ====================
@@ -166,6 +225,7 @@ $btnRetirarMonto.addEventListener('click', btnRetirarMonto);
 $btnCerrarSesion.addEventListener('click', cerrarSesion);
 $btnDonar.addEventListener('click', donar);
 $btnDonarBanco.addEventListener('click', donarBanco);
+$btnImprimirMovimientos.addEventListener('click', mostrarMovimientos);
 
 
 
